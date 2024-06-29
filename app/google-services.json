@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "460342351514",
+    "project_id": "projectbuku-7b9e3",
+    "storage_bucket": "projectbuku-7b9e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460342351514:android:62b2631fbcd08da71e7123",
+        "android_client_info": {
+          "package_name": "com.example.projectbuku"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0xr6yT6sVLI1G4XncWX95WTWRZ0Lhzks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
