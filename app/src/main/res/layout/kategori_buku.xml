@@ -14,7 +14,7 @@
         android:background="@drawable/searchbar_border"/>
 
     <TextView
-        android:id="@+id/search_result_text"
+        android:id="@+id/Genre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

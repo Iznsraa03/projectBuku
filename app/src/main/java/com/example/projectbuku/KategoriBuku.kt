@@ -1,61 +1,60 @@
-// KategoriBuku.kt
 package com.example.projectbuku
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.SearchView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class KategoriBuku : AppCompatActivity(), KatergoriAdapter.OnItemClickListener {
+class KategoriBuku : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: KatergoriAdapter
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var genreTextView: TextView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kategori_buku)
 
-        recyclerView = findViewById(R.id.book_recyclerview)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-
         firestore = Firebase.firestore
+        genreTextView = findViewById(R.id.Genre)
+        recyclerView = findViewById(R.id.book_recyclerview)
+        searchView = findViewById(R.id.search_view)
 
-        val genre = intent.getStringExtra("Genre") ?: ""
-        fetchBooksByGenre(genre)
+        val genre = intent.getStringExtra("Genre")
+        genre?.let {
+            fetchBooksByGenre(it)
+        }
     }
 
     private fun fetchBooksByGenre(genre: String) {
+        genreTextView.text = genre
+
         firestore.collection("daftarBuku")
             .whereEqualTo("Genre", genre)
             .get()
             .addOnSuccessListener { result ->
-                val books = result.map { document ->
-                    val img = document.getString("img") ?: ""
-                    val judul = document.getString("Judul") ?: ""
-                    val penulis = document.getString("Penulis") ?: "" // Tambahkan ini
-                    val sinopsis = document.getString("Sinopsis") ?: ""
-                    Buku(img, judul, penulis, sinopsis)
+                if (!result.isEmpty) {
+                    // Here you would normally set up your RecyclerView adapter with the books data
+                    // Assuming you have a BukuAdapter, you can pass the data to it
+                    val books = result.map { document ->
+                        val img = document.getString("img") ?: ""
+                        val judul = document.getString("Judul") ?: ""
+                        val penulis = document.getString("Penulis") ?: ""
+                        val sinopsis = document.getString("Sinopsis") ?: ""
+                        Buku(img, judul, penulis, sinopsis)
+                    }
+                    recyclerView.adapter = BukuAdapter(this, books)
+                } else {
+                    genreTextView.text = "No books found for this genre"
                 }
-                adapter = KatergoriAdapter(this, books, this)
-                recyclerView.adapter = adapter
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error fetching data", Toast.LENGTH_SHORT).show()
+                genreTextView.text = "Error fetching books"
             }
-    }
-
-    override fun onItemClick(book: Buku) {
-        val intent = Intent(this, HalamanBuku::class.java)
-        intent.putExtra("img", book.img)
-        intent.putExtra("judul", book.judul)
-        intent.putExtra("penulis", book.penulis)
-        intent.putExtra("sinopsis", book.sinopsis)
-        startActivity(intent)
     }
 }

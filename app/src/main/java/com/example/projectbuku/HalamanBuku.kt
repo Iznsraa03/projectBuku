@@ -104,4 +104,3 @@ class HalamanBuku : AppCompatActivity() {
         startActivity(intent)
     }
 }
-d

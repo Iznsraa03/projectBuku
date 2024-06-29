@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    classpath(libs.gradle)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -50,4 +51,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+fun DependencyHandlerScope.classpath(gradle: Any) {
+
 }
