@@ -5,13 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:queryHint="Search books"
-        android:background="@drawable/searchbar_border"/>
+        android:src="@drawable/arrowblck" />
 
     <TextView
         android:id="@+id/Genre"
